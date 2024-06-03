@@ -74,6 +74,15 @@ document.addEventListener("keydown", () => {
     }
 });
 
+// Add event listener for touch events
+canvas.addEventListener("touchstart", () => {
+    if (!gameOver) {
+        bird.velocity = bird.lift;
+    } else {
+        resetGame();
+    }
+});
+
 function drawBird() {
     context.drawImage(bird.image, bird.x, bird.y, bird.width, bird.height);
 }
@@ -185,48 +194,4 @@ function setGameOver() {
 function resetGame() {
     bird.y = canvas.height / 2;
     bird.velocity = 0;
-    pipes.length = 0;
-    coins.length = 0;
-    score = 0;
-    points = 0;
-    frame = 0;
-    gameOver = false;
-    updateScoreboard();
-    startSoundtrack();
-}
-
-function drawScore() {
-    context.fillStyle = "black";
-    context.font = "16px Arial";
-    context.fillText(`Score: ${score}`, 10, 20);
-}
-
-function updateScoreboard() {
-    const scoreboard = document.getElementById("scoreboard");
-    scoreboard.innerHTML = `Score: ${score}<br>Best: ${bestScore}<br>Points: ${points}`;
-}
-
-function gameLoop() {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    if (!gameOver) {
-        drawBird();
-        drawPipes();
-        drawCoins();
-        updateBird();
-        updatePipes();
-        updateCoins();
-        checkCollision();
-        frame++;
-    } else {
-        setGameOver();
-    }
-    requestAnimationFrame(gameLoop);
-}
-
-const gameContainer = document.getElementById("game-container");
-const scoreboard = document.createElement("div");
-scoreboard.id = "scoreboard";
-gameContainer.appendChild(scoreboard);
-updateScoreboard();
-
-gameLoop();
+    pipe
