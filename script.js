@@ -13,8 +13,8 @@ resizeCanvas();
 const bird = {
     x: canvas.width / 4,
     y: canvas.height / 2,
-    width: canvas.width / 30, // Increased size
-    height: canvas.width / 30, // Increased size
+    width: canvas.width / 4, // Increased size
+    height: canvas.width / 4, // Increased size
     gravity: 0.4,
     lift: -6,
     velocity: 0,
@@ -38,7 +38,7 @@ const pipes = [];
 const coins = [];
 const pipeWidth = canvas.width / 12;
 const pipeGap = canvas.height / 3;
-const coinSize = canvas.width / 15; // Increased size
+const coinSize = canvas.width / 6; // Increased size
 let frame = 0;
 let score = 0;
 let bestScore = 0;
@@ -254,6 +254,7 @@ scoreboard.style.position = "absolute";
 scoreboard.style.top = "10px";
 scoreboard.style.left = "10px";
 scoreboard.style.color = "white";
+scoreboard.style.fontSize = "20px"; // Make the text larger for better visibility
 gameContainer.appendChild(scoreboard);
 updateScoreboard();
 
