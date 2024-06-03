@@ -13,8 +13,8 @@ resizeCanvas();
 const bird = {
     x: canvas.width / 4,
     y: canvas.height / 2,
-    width: canvas.width / 10, // Increased size
-    height: canvas.width / 10, // Increased size
+    width: canvas.width / 9, // Increased size
+    height: canvas.width / 9, // Increased size
     gravity: 0.4,
     lift: -6,
     velocity: 0,
@@ -38,7 +38,7 @@ const pipes = [];
 const coins = [];
 const pipeWidth = canvas.width / 12;
 const pipeGap = canvas.height / 3;
-const coinSize = canvas.width / 10; // Increased size
+const coinSize = canvas.width / 9; // Increased size
 let frame = 0;
 let score = 0;
 let bestScore = 0;
@@ -250,6 +250,10 @@ function gameLoop() {
 const gameContainer = document.getElementById("game-container");
 const scoreboard = document.createElement("div");
 scoreboard.id = "scoreboard";
+scoreboard.style.position = "absolute";
+scoreboard.style.top = "10px";
+scoreboard.style.left = "10px";
+scoreboard.style.color = "white";
 gameContainer.appendChild(scoreboard);
 updateScoreboard();
 
