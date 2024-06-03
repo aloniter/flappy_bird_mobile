@@ -13,8 +13,8 @@ resizeCanvas();
 const bird = {
     x: canvas.width / 4,
     y: canvas.height / 2,
-    width: canvas.width / 4, // Increased size
-    height: canvas.width / 4, // Increased size
+    width: canvas.width / 3, // Increased size
+    height: canvas.width / 3, // Increased size
     gravity: 0.4,
     lift: -6,
     velocity: 0,
@@ -36,7 +36,7 @@ coinImages[5].src = 'coin6.png';
 
 const pipes = [];
 const coins = [];
-const pipeWidth = canvas.width / 12;
+const pipeWidth = canvas.width / 8; // Adjusted for larger canvas
 const pipeGap = canvas.height / 3;
 const coinSize = canvas.width / 6; // Increased size
 let frame = 0;
