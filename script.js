@@ -13,8 +13,8 @@ resizeCanvas();
 const bird = {
     x: canvas.width / 4,
     y: canvas.height / 2,
-    width: canvas.width / 18,
-    height: canvas.width / 18,
+    width: canvas.width / 10, // Increased size
+    height: canvas.width / 10, // Increased size
     gravity: 0.4,
     lift: -6,
     velocity: 0,
@@ -38,7 +38,7 @@ const pipes = [];
 const coins = [];
 const pipeWidth = canvas.width / 12;
 const pipeGap = canvas.height / 3;
-const coinSize = canvas.width / 16;
+const coinSize = canvas.width / 10; // Increased size
 let frame = 0;
 let score = 0;
 let bestScore = 0;
@@ -74,12 +74,19 @@ document.addEventListener("keydown", () => {
     }
 });
 
+// Prevent touchstart event from triggering multiple times
+let touchStartTime = 0;
+
 // Add event listeners for touch and click events
-canvas.addEventListener("touchstart", () => {
-    if (!gameOver) {
-        bird.velocity = bird.lift;
-    } else {
-        resetGame();
+canvas.addEventListener("touchstart", (e) => {
+    const now = Date.now();
+    if (now - touchStartTime > 100) { // Prevents double touch
+        if (!gameOver) {
+            bird.velocity = bird.lift;
+        } else {
+            resetGame();
+        }
+        touchStartTime = now;
     }
 });
 
