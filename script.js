@@ -13,8 +13,8 @@ resizeCanvas();
 const bird = {
     x: canvas.width / 4,
     y: canvas.height / 2,
-    width: canvas.width / 18,
-    height: canvas.width / 18,
+    width: (canvas.width / 18) * 3, // 3 times larger
+    height: (canvas.width / 18) * 3, // 3 times larger
     gravity: 0.2, // Reduced gravity for easier gameplay
     lift: -5, // Slightly less lift for easier jumps
     velocity: 0,
