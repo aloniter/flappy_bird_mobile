@@ -13,10 +13,10 @@ resizeCanvas();
 const bird = {
     x: canvas.width / 4,
     y: canvas.height / 2,
-    width: canvas.width / 4, // Adjusted size
-    height: canvas.width / 4, // Adjusted size
-    gravity: 0.4,
-    lift: -6,
+    width: canvas.width / 18,
+    height: canvas.width / 18,
+    gravity: 0.2, // Reduced gravity for easier gameplay
+    lift: -5, // Slightly less lift for easier jumps
     velocity: 0,
     image: new Image()
 };
@@ -36,15 +36,16 @@ coinImages[5].src = 'coin6.png';
 
 const pipes = [];
 const coins = [];
-const pipeWidth = canvas.width / 8; // Adjusted for larger canvas
-const pipeGap = canvas.height / 3;
-const coinSize = canvas.width / 8; // Adjusted size
+const pipeWidth = canvas.width / 12;
+const pipeGap = canvas.height / 2.5; // Increased gap for easier gameplay
+const coinSize = canvas.width / 16;
 let frame = 0;
 let score = 0;
 let bestScore = 0;
 let points = 0;
 let gameOver = false;
 let firstGame = true;
+let touchInProgress = false; // Flag to prevent double jumps
 
 const soundtrack = document.getElementById("soundtrack");
 
@@ -74,25 +75,13 @@ document.addEventListener("keydown", () => {
     }
 });
 
-// Prevent touchstart event from triggering multiple times
-let touchStartTime = 0;
-
-// Add event listeners for touch and click events
-canvas.addEventListener("touchstart", (e) => {
-    const now = Date.now();
-    if (now - touchStartTime > 100) { // Prevents double touch
-        if (!gameOver) {
-            bird.velocity = bird.lift;
-        } else {
-            resetGame();
-        }
-        touchStartTime = now;
-    }
-});
-
-canvas.addEventListener("click", () => {
-    if (!gameOver) {
+document.addEventListener("touchstart", () => {
+    if (!gameOver && !touchInProgress) {
         bird.velocity = bird.lift;
+        touchInProgress = true;
+        setTimeout(() => {
+            touchInProgress = false;
+        }, 100); // Reset flag after 100ms to prevent double jump
     } else {
         resetGame();
     }
@@ -130,7 +119,7 @@ function updateBird() {
 }
 
 function updatePipes() {
-    if (frame % 120 === 0) {
+    if (frame % 150 === 0) { // Increased frame interval for pipe generation
         const top = Math.random() * (canvas.height - pipeGap - 200);
         const bottom = canvas.height - top - pipeGap;
         pipes.push({ x: canvas.width, top: top, bottom: bottom, passed: false });
@@ -139,7 +128,7 @@ function updatePipes() {
         addCoinBelowGap(canvas.width + pipeWidth + 300, top, pipeGap, canvas.height);
     }
     pipes.forEach(pipe => {
-        pipe.x -= 3;
+        pipe.x -= 2; // Reduced pipe speed for easier gameplay
     });
     pipes.filter(pipe => pipe.x + pipeWidth > 0);
 }
@@ -166,7 +155,7 @@ function addCoin(x, y) {
 
 function updateCoins() {
     coins.forEach(coin => {
-        coin.x -= 3;
+        coin.x -= 2; // Reduced coin speed for consistency
     });
     coins.filter(coin => coin.x + coinSize > 0);
 }
@@ -250,11 +239,6 @@ function gameLoop() {
 const gameContainer = document.getElementById("game-container");
 const scoreboard = document.createElement("div");
 scoreboard.id = "scoreboard";
-scoreboard.style.position = "absolute";
-scoreboard.style.top = "10px";
-scoreboard.style.left = "10px";
-scoreboard.style.color = "white";
-scoreboard.style.fontSize = "20px"; // Make the text larger for better visibility
 gameContainer.appendChild(scoreboard);
 updateScoreboard();
 
